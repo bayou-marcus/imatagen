@@ -6,11 +6,10 @@ Gem::Specification.new do |s|
   s.description = 'An OS X-only, command-line utility which inspects a directory for specified image types and adds Finder tags which describe their width dimension (ex: "Width: 1501-2000").'
   s.authors     = ['Joel Wagener']
   s.email       = 'bayou.marcus@gmail.com'
-  s.executables = ['imatagen', 'tag']
+  s.executables = ['imatagen']
   s.files       = FileList['**/**/*']
   s.homepage    = 'https://github.com/bayou-marcus/imatagen'
   s.license     = 'The MIT License.' # http://choosealicense.com
   s.required_ruby_version = '>= 2.0.0'
-  # s.add_runtime_dependency 'dimensions', '~> 1.3.0'
   s.platform = Gem::Platform.local # Ie: require OS X (http://guides.rubygems.org/specification-reference/ ?)
 end
