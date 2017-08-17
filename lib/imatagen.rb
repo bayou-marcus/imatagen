@@ -23,7 +23,8 @@ def build_index_for(directory, formats)
       index << {
         :file => m,
         :width => xy[0],
-        :height => xy[1]
+        :height => xy[1],
+        :tags => Tagger.tags(m)
       }
       print '.'
     end
@@ -32,6 +33,7 @@ def build_index_for(directory, formats)
 
   raise '> Exiting, no matches found' if index.empty?
   puts "\n> Index contains #{index.size} files" if @opts[:verbose]
+  puts "\n> Index is #{index.inspect}" if @opts[:verbose] # FIXME rm
   index.sort_by!{|file| file[:file]}
 end
 
@@ -39,7 +41,7 @@ end
 def tag_files(index)
   print '> Tagging files '
 
-  buckets = Bucketeer.create_buckets() # Initialize buckets with defaults
+  buckets = Bucketeer.create_buckets(11000) # Initialize buckets with 11k max size and other defaults
   buckets_counts = buckets.map{|b| [b, 0]}.to_h # to_h requires Ruby 2.x
 
   successes, failures = 0, 0
@@ -49,7 +51,7 @@ def tag_files(index)
     label = "Width #{bucket.min}-#{bucket.max}"
 
     if @opts[:dryrun]
-      result = FileTest.writable?(f[:file]) ? true : false # Note benchmarking showed that per file, this dryrun test is nearly 8k times faster than actually tagging with the tag binary
+      result = FileTest.writable?(f[:file]) ? true : false # Benchmarking showed dryrun to be ~8k times faster per file than actually tagging with the tag binary
     else
       result = Tagger.tag(f[:file], label)
     end
@@ -109,7 +111,7 @@ end
   opt :tag, 'Add width tags', :default => true
   opt :untag, 'Remove all tags'
   opt :verbose, 'Use verbose mode'
-  opt :dryrun, 'No alterations, verbose output'
+  opt :dryrun, 'No alterations, verbose output', :short => '-n'
   opt :log, 'Show last session\'s log'
 end
 

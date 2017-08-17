@@ -21,4 +21,4 @@ Run without any parameters, by default Imatagen will tag .jpg, .jpeg, and .png f
 
 ## Dependencies
 
-Imatagen is a healthy part glue, with heavy lifting courtesy of the OS X `sips` and `xattr` utilities. [Trollop](https://github.com/ManageIQ/trollop) also lends a hand.
+Imatagen is a healthy part glue, with heavy lifting courtesy of the OS X `sips` utility, [Tag](https://github.com/jdberry/tag), and [Trollop](https://github.com/ManageIQ/trollop).
